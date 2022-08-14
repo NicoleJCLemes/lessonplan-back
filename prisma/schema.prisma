@@ -55,9 +55,10 @@ model Lessons {
   discipline Disciplines @relation(fields: [disciplineId], references: [id])
   userId Int
   user Users @relation(fields: [userId], references: [id])
-  date DateTime
+  date String
   content String
   notes String
 
+  @@unique([classId, disciplineId, date])
   @@map("lessons")
 }

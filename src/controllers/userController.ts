@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { signInService, signUpService } from "../services/userService.js";
+import jwt from "jsonwebtoken";
+import "../config/setup.js";
+import { findUserById } from "../repositories/userRepository.js";
 
 export async function signUp(req: Request, res: Response) {
     const body = req.body;
@@ -13,6 +16,8 @@ export async function signIn(req: Request, res: Response) {
     const body = req.body;
 
     const token = await signInService(body);
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET_KEY) as { userId: number };
+    const user = await findUserById(userId);
 
-    res.status(201).send(token); // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY2MDA1OTQ0Mn0.wTNGjtOdeLuiQ134Xj8RHFuCvs-zecaxmehD0Ipliow
+    res.status(201).send({ token, name: user.name });
 }
