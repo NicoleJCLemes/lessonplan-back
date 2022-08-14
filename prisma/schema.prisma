@@ -36,12 +36,14 @@ model Classes {
   id Int @id @default(autoincrement())
   userId Int
   user Users @relation(fields: [userId], references: [id])
-  name String @unique
+  name String
   address String
-  time DateTime
+  time String
+  weekDay String
   telephone String
   lessons Lessons[]
 
+  @@unique([time, weekDay])
   @@map("classes")
 }
 

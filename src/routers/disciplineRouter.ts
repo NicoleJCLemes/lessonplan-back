@@ -2,7 +2,7 @@ import { Router } from "express";
 import { getDisciplines, postDiscipline } from "../controllers/disciplineController.js";
 import { authentication } from "../middlewares/authentication.js";
 import schemaValidation from "../middlewares/schemaValidation.js";
-import { disciplineSchema } from "../schemas/disciplineSchema.js";
+import { disciplineSchema } from "../schemas/planningSchema.js";
 
 const disciplineRouter = Router();
 
