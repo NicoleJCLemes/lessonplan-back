@@ -26,6 +26,17 @@ async function getLessons(userId:number) {
     const lessons = await prisma.lessons.findMany({
         where: {
             userId
+        },
+        select: {
+            id: true,
+            class: {select: {
+                name: true,
+                time: true
+            }},
+            discipline: {select: {name: true}},
+            date: true,
+            content: true,
+            notes: true
         }
     });
 
@@ -33,9 +44,9 @@ async function getLessons(userId:number) {
 }
 
 async function findByClassId(classId:number) {
-    const lesson = await prisma.lessons.findFirst({
+    const lesson = await prisma.classes.findFirst({
         where: {
-            classId
+            id: classId
         }
     });
 
@@ -43,9 +54,9 @@ async function findByClassId(classId:number) {
 }
 
 async function findByDisciplineId(disciplineId:number) {
-    const lesson = await prisma.lessons.findFirst({
+    const lesson = await prisma.disciplines.findFirst({
         where: {
-            disciplineId
+            id: disciplineId
         }
     });
 
